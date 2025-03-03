@@ -101,9 +101,7 @@ export default function About() {
               <motion.div
                 key={quality.title}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                {...cardAnimation(index)}
               >
                 <div className="mb-4">{quality.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{quality.title}</h3>

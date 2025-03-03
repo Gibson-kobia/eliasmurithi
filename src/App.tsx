@@ -13,14 +13,17 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
+      <PerformanceOptimizer />
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/vision" element={<Vision />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/vision" element={<Vision />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer />
       <ScrollToTop />

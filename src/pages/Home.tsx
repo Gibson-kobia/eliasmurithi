@@ -147,11 +147,7 @@ export default function Home() {
               <motion.div
                 key={item.title}
                 className="bg-orange-50 p-8 rounded-xl hover:shadow-lg transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
+                {...cardAnimation(index)}
               >
                 <div className="mb-4">{item.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
