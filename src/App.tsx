@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Navigation from './components/Navigation';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
@@ -12,6 +13,9 @@ import Footer from './components/Footer';
 function App() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>Elias Murithi</title>
+      </Helmet>
       <Navigation />
       <main>
         <Routes>
