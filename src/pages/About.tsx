@@ -2,6 +2,24 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Users, Target, Award } from 'lucide-react';
 import { ImageWithFallback } from '../components/ImageWithFallback';
+import { usePerformance } from '../contexts/PerformanceContext';
+
+// Define the cardAnimation function
+const cardAnimation = (index: number) => {
+  const { shouldUseSimpleAnimations } = usePerformance();
+  
+  return shouldUseSimpleAnimations
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { delay: index * 0.1 }
+      }
+    : {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5, delay: index * 0.1 }
+      };
+};
 
 export default function About() {
   const qualities = [

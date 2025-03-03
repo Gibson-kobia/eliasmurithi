@@ -2,6 +2,27 @@ import React from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { usePerformance } from '../contexts/PerformanceContext';
+
+// Define the cardAnimation function
+const cardAnimation = (index: number) => {
+  const { shouldUseSimpleAnimations } = usePerformance();
+  
+  return shouldUseSimpleAnimations
+    ? {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        transition: { delay: index * 0.1 },
+        viewport: { once: true }
+      }
+    : {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { delay: index * 0.2 },
+        viewport: { once: true },
+        whileHover: { y: -5 }
+      };
+};
 
 export default function Home() {
   const initiatives = [
