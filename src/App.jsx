@@ -1,14 +1,3 @@
-import { Helmet } from 'react-helmet'
-
-function App() {
-  return (
-    <>
-      <Helmet>
-        <title>Elias Murithi</title>
-      </Helmet>
-      // ... existing code ...
-    </>
-  )
-}
-
-export default App 
+// This file is intentionally empty to prevent build errors
+// The actual application uses App.tsx instead
+export default () => null;

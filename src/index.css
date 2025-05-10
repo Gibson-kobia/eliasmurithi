@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Performance variables that can be adjusted based on device capabilities */
+  --animation-duration-factor: 1;
+  --transition-duration-base: 300ms;
+  --hover-scale: 1.05;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -9,12 +16,45 @@
   
   body {
     @apply text-gray-900 antialiased;
+    /* Add content-visibility to improve rendering performance */
+    content-visibility: auto;
+  }
+
+  /* Optimize animations for low-end devices */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Optimize paint and layout operations */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  /* Use hardware acceleration for animations */
+  .use-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 }
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-md transition-all duration-300 transform hover:scale-105;
+    @apply px-4 py-2 rounded-md transition-all use-gpu;
+    transition-duration: calc(var(--transition-duration-base) * var(--animation-duration-factor));
+    transform: scale(1);
+  }
+  
+  .btn:hover {
+    transform: scale(var(--hover-scale));
   }
   
   .btn-primary {
@@ -26,10 +66,35 @@
   }
 
   .link-hover {
-    @apply transition-all duration-300 hover:text-primary-600 hover:scale-105;
+    @apply transition-all use-gpu;
+    transition-duration: calc(var(--transition-duration-base) * var(--animation-duration-factor));
+  }
+
+  .link-hover:hover {
+    @apply text-primary-600;
+    transform: scale(var(--hover-scale));
   }
 
   .card {
-    @apply bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105;
+    @apply bg-white rounded-lg shadow-md hover:shadow-xl transition-all use-gpu;
+    transition-duration: calc(var(--transition-duration-base) * var(--animation-duration-factor));
+    transform: scale(1);
+  }
+
+  .card:hover {
+    transform: scale(var(--hover-scale));
+  }
+}
+
+/* Add optimizations for images */
+img {
+  content-visibility: auto;
+}
+
+/* Add optimizations for low-end devices */
+@supports (content-visibility: auto) {
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
   }
 }

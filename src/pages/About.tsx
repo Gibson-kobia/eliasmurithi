@@ -2,6 +2,24 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Users, Target, Award } from 'lucide-react';
 import { ImageWithFallback } from '../components/ImageWithFallback';
+import { usePerformance } from '../contexts/PerformanceContext';
+
+// Define the cardAnimation function
+const cardAnimation = (index: number) => {
+  const { shouldUseSimpleAnimations } = usePerformance();
+  
+  return shouldUseSimpleAnimations
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { delay: index * 0.1 }
+      }
+    : {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5, delay: index * 0.1 }
+      };
+};
 
 export default function About() {
   const qualities = [
@@ -101,9 +119,7 @@ export default function About() {
               <motion.div
                 key={quality.title}
                 className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                {...cardAnimation(index)}
               >
                 <div className="mb-4">{quality.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{quality.title}</h3>

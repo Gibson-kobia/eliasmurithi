@@ -2,6 +2,27 @@ import React from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { usePerformance } from '../contexts/PerformanceContext';
+
+// Define the cardAnimation function
+const cardAnimation = (index: number) => {
+  const { shouldUseSimpleAnimations } = usePerformance();
+  
+  return shouldUseSimpleAnimations
+    ? {
+        initial: { opacity: 0 },
+        whileInView: { opacity: 1 },
+        transition: { delay: index * 0.1 },
+        viewport: { once: true }
+      }
+    : {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { delay: index * 0.2 },
+        viewport: { once: true },
+        whileHover: { y: -5 }
+      };
+};
 
 export default function Home() {
   const initiatives = [
@@ -147,11 +168,7 @@ export default function Home() {
               <motion.div
                 key={item.title}
                 className="bg-orange-50 p-8 rounded-xl hover:shadow-lg transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
+                {...cardAnimation(index)}
               >
                 <div className="mb-4">{item.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
